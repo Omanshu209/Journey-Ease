@@ -174,44 +174,48 @@ class Railway
 		return trainInfo;
 	}
 	
-	public void printTrainInfo(int trainNum)
+	public void printTrainInfo(int trainNum, boolean printSchedule)
 	{
 		LinkedList<LinkedList<String>>[] trainInfo = this.fetchTrainInfo(trainNum);
 		
 		if(trainInfo[0].get(0).size() == 0)
 			return;
 		
-		this.print(trainInfo);
+		this.print(trainInfo, printSchedule);
 	}
 	
-	public void printTrainInfo(String trainName)
+	public void printTrainInfo(String trainName, boolean printSchedule)
 	{
 		LinkedList<LinkedList<String>>[] trainInfo = this.fetchTrainInfo(trainName);
 		
 		if(trainInfo[0].get(0).size() == 0)
 			return;
 		
-		this.print(trainInfo);
+		this.print(trainInfo, printSchedule);
 	}
 	
-	private void print(LinkedList<LinkedList<String>>[] trainInfo)
+	private void print(LinkedList<LinkedList<String>>[] trainInfo, boolean printSchedule)
 	{
 		System.out.println("Train Number : " + trainInfo[0].get(0).get(0));
 		System.out.println("Train Name   : " + trainInfo[0].get(0).get(1));
 		System.out.println("Source       : " + trainInfo[0].get(0).get(2));
 		System.out.println("Destination  : " + trainInfo[0].get(0).get(3));
 		System.out.println("Running Day  : " + trainInfo[0].get(0).get(4));
-		System.out.println();
-		System.out.println("SCHEDULE");
 		
-		for(int i = 1 ; i < trainInfo[1].size() ; i++)
+		if(printSchedule)
 		{
 			System.out.println();
-			System.out.println("Station Code   : " + trainInfo[1].get(i).get(1));
-			System.out.println("Station        : " + trainInfo[1].get(i).get(2));
-			System.out.println("Arrival Time   : " + trainInfo[1].get(i).get(3));
-			System.out.println("Departure Time : " + trainInfo[1].get(i).get(4));
-			System.out.println("Distance Trav. : " + trainInfo[1].get(i).get(5));
+			System.out.println("SCHEDULE");
+			
+			for(int i = 1 ; i < trainInfo[1].size() ; i++)
+			{
+				System.out.println();
+				System.out.println("Station Code   : " + trainInfo[1].get(i).get(1));
+				System.out.println("Station        : " + trainInfo[1].get(i).get(2));
+				System.out.println("Arrival Time   : " + trainInfo[1].get(i).get(3));
+				System.out.println("Departure Time : " + trainInfo[1].get(i).get(4));
+				System.out.println("Distance Trav. : " + trainInfo[1].get(i).get(5));
+			}
 		}
 	}
 }
@@ -221,6 +225,6 @@ public class journeyEase
 	public static void main(String[] args)
 	{
 		Railway rail = new Railway();
-		rail.printTrainInfo("HYB-RXL");
+		rail.printTrainInfo("HYB-RXL", false);
 	}
 }
