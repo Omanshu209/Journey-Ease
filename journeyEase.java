@@ -107,6 +107,73 @@ class Railway
 		return trainInfo;
 	}
 	
+	private LinkedList<LinkedList<String>>[] fetchTrainInfo(String trainName)
+	{
+		LinkedList<LinkedList<String>>[] trainInfo = new LinkedList[2];
+		trainInfo[0] = new LinkedList<LinkedList<String>>();
+		trainInfo[1] = new LinkedList<LinkedList<String>>();
+		trainInfo[0].add(new LinkedList<String>());
+		trainInfo[1].add(new LinkedList<String>());
+		
+		boolean trainFound;
+		int trainNum = -1;
+		String[] data = {};
+		
+		dataReader.nextLine();
+		scheduleReader.nextLine();
+		
+		trainFound = false;
+		while(this.dataReader.hasNextLine())
+		{
+			data = this.dataReader.nextLine().replace("\"", "").split(",");
+			
+			if(trainName.equals(data[1]))
+			{
+				trainFound = true;
+				trainNum = Integer.parseInt(data[0]);
+				break;
+			}
+		}
+		
+		if(!trainFound)
+			return trainInfo;
+		
+		for(int i = 0 ; i < data.length ; i++)
+			trainInfo[0].get(0).add(data[i]);
+		
+		trainFound = false;
+		while(this.scheduleReader.hasNextLine())
+		{
+			int tempNum;
+			data = this.scheduleReader.nextLine().replace("\"", "").split(",");
+			
+			try
+			{
+				tempNum = Integer.parseInt(data[0]);
+			}
+			
+			catch(NumberFormatException e)
+			{
+				break;
+			}
+			
+			if(tempNum == trainNum)
+			{
+				trainFound = true;
+				trainInfo[1].add(new LinkedList<String>());
+				
+				for(int i = 0 ; i < 6 ; i++)
+					trainInfo[1].getLast().add(data[i]);
+			}
+			
+			else if(trainFound)
+				break;
+		}
+		
+		this.resetScanner();
+		return trainInfo;
+	}
+	
 	public void printTrainInfo(int trainNum)
 	{
 		LinkedList<LinkedList<String>>[] trainInfo = this.fetchTrainInfo(trainNum);
@@ -114,6 +181,21 @@ class Railway
 		if(trainInfo[0].get(0).size() == 0)
 			return;
 		
+		this.print(trainInfo);
+	}
+	
+	public void printTrainInfo(String trainName)
+	{
+		LinkedList<LinkedList<String>>[] trainInfo = this.fetchTrainInfo(trainName);
+		
+		if(trainInfo[0].get(0).size() == 0)
+			return;
+		
+		this.print(trainInfo);
+	}
+	
+	private void print(LinkedList<LinkedList<String>>[] trainInfo)
+	{
 		System.out.println("Train Number : " + trainInfo[0].get(0).get(0));
 		System.out.println("Train Name   : " + trainInfo[0].get(0).get(1));
 		System.out.println("Source       : " + trainInfo[0].get(0).get(2));
@@ -139,6 +221,6 @@ public class journeyEase
 	public static void main(String[] args)
 	{
 		Railway rail = new Railway();
-		rail.printTrainInfo(7005);
+		rail.printTrainInfo("HYB-RXL");
 	}
 }
