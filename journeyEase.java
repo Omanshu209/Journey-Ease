@@ -80,16 +80,7 @@ class Railway
 		{
 			int tempNum;
 			data = this.scheduleReader.nextLine().replace("\"", "").split(",");
-			
-			try
-			{
-				tempNum = Integer.parseInt(data[0]);
-			}
-			
-			catch(NumberFormatException e)
-			{
-				break;
-			}
+			tempNum = Integer.parseInt(data[0]);
 			
 			if(tempNum == trainNum)
 			{
@@ -147,16 +138,7 @@ class Railway
 		{
 			int tempNum;
 			data = this.scheduleReader.nextLine().replace("\"", "").split(",");
-			
-			try
-			{
-				tempNum = Integer.parseInt(data[0]);
-			}
-			
-			catch(NumberFormatException e)
-			{
-				break;
-			}
+			tempNum = Integer.parseInt(data[0]);
 			
 			if(tempNum == trainNum)
 			{
@@ -211,7 +193,10 @@ class Railway
 		HashSet<Integer> trainNums = searchTrains(source, destination);
 		
 		for(int trainNum : trainNums)
+		{
 			this.printTrainInfo(trainNum, false);
+			System.out.println();
+		}
 	}
 	
 	
@@ -266,6 +251,7 @@ public class journeyEase
 	public static void main(String[] args)
 	{
 		Railway rail = new Railway();
-		rail.printTrains("GHY", "PNBE");
+		rail.printTrains("GHY", "NDLS");
+		rail.printTrainInfo("NDLS-GHY RAJ", true);
 	}
 }
