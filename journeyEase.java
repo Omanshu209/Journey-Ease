@@ -220,6 +220,25 @@ class Railway
 		this.print(trainInfo, printSchedule);
 	}
 	
+	public boolean isTrainNumValid(int trainNum)
+	{
+		dataReader.nextLine();
+		
+		while(this.dataReader.hasNextLine())
+		{
+			String[] data = this.dataReader.nextLine().replace("\"", "").split(",");
+			
+			if(Integer.parseInt(data[0]) == trainNum)
+			{
+				this.resetScanner();
+				return true;
+			}
+		}
+		
+		this.resetScanner();
+		return false;
+	}
+	
 	private void print(LinkedList<LinkedList<String>>[] trainInfo, boolean printSchedule)
 	{
 		System.out.println("Train Number : " + trainInfo[0].get(0).get(0));
@@ -251,6 +270,7 @@ public class journeyEase
 	public static void main(String[] args)
 	{
 		Railway rail = new Railway();
+		System.out.println(rail.isTrainNumValid(15601));
 		rail.printTrains("GHY", "NDLS");
 		rail.printTrainInfo("NDLS-GHY RAJ", true);
 	}
