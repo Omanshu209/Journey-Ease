@@ -1,4 +1,6 @@
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.LinkedList;
@@ -157,6 +159,51 @@ class Railway
 		return trainInfo;
 	}
 	
+	public boolean addTrain(LinkedList<LinkedList<String>>[] newTrainInfo)
+	{
+		if(this.isTrainNumValid(Integer.parseInt(newTrainInfo[0].get(0).get(0))))
+			return false;
+		
+		try
+		{
+			FileWriter dataWriter = new FileWriter("data/train_info.csv", true);
+			FileWriter scheduleWriter = new FileWriter("data/train_schedule.csv", true);
+			
+			String trainData = "", trainSchedule = "";
+			
+			for(String data : newTrainInfo[0].get(0))
+				trainData += "\"" + data + "\"" + ",";
+			trainData = trainData.substring(0, trainData.length() - 1);
+			
+			dataWriter.write(trainData);
+			dataWriter.write(System.lineSeparator());
+			dataWriter.close();
+			
+			for(LinkedList<String> station : newTrainInfo[1])
+			{
+				trainSchedule = "";
+				
+				for(int i = 0 ; i < 6 ; i++)
+					trainSchedule += station.get(i) + ",";
+				
+				trainSchedule = trainSchedule.substring(0, trainSchedule.length() - 1);
+				
+				scheduleWriter.write(trainSchedule);
+				scheduleWriter.write(System.lineSeparator());
+			}
+			
+			scheduleWriter.close();
+		}
+		
+		catch(IOException e)
+		{
+			System.out.println("ERROR!");
+			return false;
+		}
+		
+		return true;
+	}
+	
 	private HashSet<Integer> searchTrains(String source, String destination)
 	{
 		HashSet<Integer> trainNums = new HashSet<Integer>();
@@ -269,9 +316,18 @@ public class journeyEase
 {
 	public static void main(String[] args)
 	{
+		/*LinkedList<LinkedList<String>>[] data = new LinkedList[2];
+		data[0] = new LinkedList();
+		data[1] = new LinkedList();
+		data[0].add(new LinkedList(Arrays.asList("705", "GHY Sp.", "Guwahati", "New Delhi", "Saturday")));
+		data[1].add(new LinkedList(Arrays.asList("705", "GHY", "Guwahati", "17:15:00", "17:20:00", "0")));
+		data[1].add(new LinkedList(Arrays.asList("705", "NDLS", "Delhi", "10:15:00", "17:20:00", "2017")));
+		System.out.println(data[1].get(0));
+		
 		Railway rail = new Railway();
-		System.out.println(rail.isTrainNumValid(15601));
-		rail.printTrains("GHY", "NDLS");
-		rail.printTrainInfo("NDLS-GHY RAJ", true);
+		System.out.println(rail.addTrain(data));
+		System.out.println(rail.isTrainNumValid(705));
+		//rail.printTrains("GHY", "NDLS");
+		rail.printTrainInfo("GHY Sp.", true);*/
 	}
 }
