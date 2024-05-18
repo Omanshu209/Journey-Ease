@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.LinkedList;
+import java.util.HashSet;
 
 class Railway
 {
@@ -174,6 +175,46 @@ class Railway
 		return trainInfo;
 	}
 	
+	private HashSet<Integer> searchTrains(String source, String destination)
+	{
+		HashSet<Integer> trainNums = new HashSet<Integer>();
+		
+		dataReader.nextLine();
+		scheduleReader.nextLine();
+		
+		int prevNum = -1;
+		boolean sourceFound = false;
+		while(this.scheduleReader.hasNextLine())
+		{
+			String[] data = this.scheduleReader.nextLine().replace("\"", "").split(",");
+			
+			if(source.equals(data[1]))
+				sourceFound = true;
+			
+			else if(destination.equals(data[1]) && sourceFound)
+				trainNums.add(Integer.parseInt(data[0]));
+				
+			int tempNum = Integer.parseInt(data[0]);
+			if(tempNum != prevNum)
+				sourceFound = false;
+			
+			prevNum = tempNum;
+		}
+		
+		this.resetScanner();
+		
+		return trainNums;
+	}
+	
+	public void printTrains(String source, String destination)
+	{
+		HashSet<Integer> trainNums = searchTrains(source, destination);
+		
+		for(int trainNum : trainNums)
+			this.printTrainInfo(trainNum, false);
+	}
+	
+	
 	public void printTrainInfo(int trainNum, boolean printSchedule)
 	{
 		LinkedList<LinkedList<String>>[] trainInfo = this.fetchTrainInfo(trainNum);
@@ -225,6 +266,6 @@ public class journeyEase
 	public static void main(String[] args)
 	{
 		Railway rail = new Railway();
-		rail.printTrainInfo("HYB-RXL", false);
+		rail.printTrains("GHY", "PNBE");
 	}
 }
