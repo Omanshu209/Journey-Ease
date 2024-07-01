@@ -5,6 +5,10 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.LinkedList;
 import java.util.HashSet;
+import java.time.LocalDate;
+import java.time.DayOfWeek;
+
+//import java.util.Arrays;
 
 class Railway
 {
@@ -235,6 +239,61 @@ class Railway
 		return trainNums;
 	}
 	
+	public boolean trainRunsOnDate(String dateString, int trainNum)
+	{
+		LocalDate date = LocalDate.parse(dateString);// Format : 2024-01-08
+		DayOfWeek day = date.getDayOfWeek();
+    	int dayInt = day.getValue();
+    	
+    	LinkedList<LinkedList<String>>[] trainInfo = this.fetchTrainInfo(trainNum);
+    	String dayTrain = trainInfo[0].get(0).get(4);
+    	
+    	int dayTrainInt = 0;
+    	
+    	switch(dayTrain)
+    	{
+    		case "Monday":
+    			dayTrainInt = 1;
+    			break;
+    		
+    		case "Tuesday":
+    			dayTrainInt = 2;
+    			break;
+    		
+    		case "Wednesday":
+    			dayTrainInt = 3;
+    			break;
+    		
+    		case "Thursday":
+    			dayTrainInt = 4;
+    			break;
+    		
+    		case "Friday":
+    			dayTrainInt = 5;
+    			break;
+    		
+    		case "Saturday":
+    			dayTrainInt = 6;
+    			break;
+    		
+    		case "Sunday":
+    			dayTrainInt = 7;
+    			break;
+    	}
+    	
+    	if(dayTrainInt == dayInt)
+    		return true;
+    	return false;
+	}
+	
+	public boolean bookTrain(String name, int trainNum, String date)
+	{
+		if(!this.trainRunsOnDate(date, trainNum))
+			return false;
+			
+		return true;
+	}
+	
 	public void printTrains(String source, String destination)
 	{
 		HashSet<Integer> trainNums = searchTrains(source, destination);
@@ -328,6 +387,8 @@ public class journeyEase
 		System.out.println(rail.addTrain(data));
 		System.out.println(rail.isTrainNumValid(705));
 		//rail.printTrains("GHY", "NDLS");
-		rail.printTrainInfo("GHY Sp.", true);*/
+		rail.printTrainInfo("GHY Sp.", true);
+		
+		System.out.println(rail.trainRunsOnDate("2024-07-02", 421));*/
 	}
 }
