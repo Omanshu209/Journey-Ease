@@ -208,7 +208,19 @@ class Railway
 		return true;
 	}
 	
-	private HashSet<Integer> searchTrains(String source, String destination)
+	public HashSet<Integer> searchTrainsOnDate(String source, String destination, String date)
+	{
+		HashSet<Integer> trainNums = this.searchTrains(source, destination);
+		HashSet<Integer> newTrainNums = new HashSet<Integer>();
+		
+		for(int num : trainNums)
+			if(trainRunsOnDate(date, num))
+				newTrainNums.add(num);
+		
+		return newTrainNums;
+	}
+	
+	public HashSet<Integer> searchTrains(String source, String destination)
 	{
 		HashSet<Integer> trainNums = new HashSet<Integer>();
 		
@@ -296,7 +308,18 @@ class Railway
 	
 	public void printTrains(String source, String destination)
 	{
-		HashSet<Integer> trainNums = searchTrains(source, destination);
+		HashSet<Integer> trainNums = this.searchTrains(source, destination);
+		
+		for(int trainNum : trainNums)
+		{
+			this.printTrainInfo(trainNum, false);
+			System.out.println();
+		}
+	}
+	
+	public void printTrainsOnDate(String source, String destination, String date)
+	{
+		HashSet<Integer> trainNums = this.searchTrainsOnDate(source, destination, date);
 		
 		for(int trainNum : trainNums)
 		{
@@ -384,6 +407,7 @@ public class journeyEase
 		System.out.println(data[1].get(0));
 		
 		Railway rail = new Railway();
+		rail.printTrainsOnDate("GHY", "NDLS", "2024-07-06");
 		System.out.println(rail.addTrain(data));
 		System.out.println(rail.isTrainNumValid(705));
 		//rail.printTrains("GHY", "NDLS");
