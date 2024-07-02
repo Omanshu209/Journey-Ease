@@ -3,6 +3,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.Random;
 import java.util.LinkedList;
 import java.util.HashSet;
 import java.time.LocalDate;
@@ -12,8 +13,8 @@ import java.time.DayOfWeek;
 
 class Railway
 {
-	File dataObj, scheduleObj;
-	Scanner dataReader, scheduleReader;
+	File dataObj, scheduleObj, pnrObj;
+	Scanner dataReader, scheduleReader, pnrReader;
 	
 	public Railway()
 	{
@@ -21,9 +22,11 @@ class Railway
 		{
 			this.dataObj = new File("data/train_info.csv");
 			this.scheduleObj = new File("data/train_schedule.csv");
+			this.pnrObj = new File("data/PNR.csv");
 			
 			this.dataReader = new Scanner(dataObj);
 			this.scheduleReader = new Scanner(scheduleObj);
+			this.pnrReader = new Scanner(pnrObj);
 		}
 		
 		catch(FileNotFoundException e)
@@ -39,6 +42,20 @@ class Railway
 		{
 			this.dataReader = new Scanner(dataObj);
 			this.scheduleReader = new Scanner(scheduleObj);
+		}
+		
+		catch(FileNotFoundException e)
+		{
+			System.out.println("ERROR : File Not Found!");
+			System.exit(0);
+		}
+	}
+	
+	private void resetPNRScanner()
+	{
+		try
+		{
+			this.pnrReader = new Scanner(pnrObj);
 		}
 		
 		catch(FileNotFoundException e)
@@ -298,12 +315,115 @@ class Railway
     	return false;
 	}
 	
-	public boolean bookTrain(String name, int trainNum, String date)
+	public int bookTrain(String username, int trainNum, String date, String classTrain, String from, String to)
 	{
 		if(!this.trainRunsOnDate(date, trainNum))
-			return false;
+			return -1;
+		
+		Random rand = new Random();
+		int randomPNR = -1;
+		boolean isNotUnique = true;
+		
+		while(isNotUnique)
+		{
+			isNotUnique = false;
 			
-		return true;
+			randomPNR = rand.nextInt(999999 - 100000 + 1) + 100000; // 6-digit random number
+			int pnr;
+			while(this.pnrReader.hasNextLine())
+			{
+				pnr = Integer.parseInt(this.pnrReader.nextLine().split(",")[0]);
+				
+				if(pnr == randomPNR)
+				{
+					isNotUnique = true;
+					break;
+				}
+			}
+			
+			this.resetPNRScanner();
+		}
+		
+		String pnrData = randomPNR + "," + username + "," + trainNum + "," + date + "," + classTrain;
+		LinkedList<LinkedList<String>>[] trainInfo = this.fetchTrainInfo(trainNum);
+		
+		try
+		{
+			FileWriter pnrWriter = new FileWriter("data/PNR.csv", true);
+			pnrWriter.write(pnrData);
+			pnrWriter.write(System.lineSeparator());
+			pnrWriter.close();
+			
+			FileWriter ticketWriter = new FileWriter("data/Tickets/PNR" + randomPNR + ".txt", false);
+			ticketWriter.write("==========================");
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("|  USERNAME  | " + username);
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("==========================");
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("|    PNR     |" + randomPNR);
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("==========================");
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("| TRAIN NO.  |" + trainNum);
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("==========================");
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("| TRAIN NAME |" + trainInfo[0].get(0).get(1));
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("==========================");
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("|    DATE    |" + date);
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("==========================");
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("|    CLASS   |" + classTrain);
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("==========================");
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("|    FROM    |" + from);
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("==========================");
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("|    TO      |" + to);
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("==========================");
+			
+			for(int i = 0 ; i < 8 ; i++)
+				ticketWriter.write(System.lineSeparator());
+			
+			ticketWriter.write("==========================");
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("SCHEDULE");
+			ticketWriter.write(System.lineSeparator());
+			ticketWriter.write("==========================");
+			ticketWriter.write(System.lineSeparator());
+			
+			for(int i = 1 ; i < trainInfo[1].size() ; i++)
+			{
+				ticketWriter.write("Station Code   : " + trainInfo[1].get(i).get(1));
+				ticketWriter.write(System.lineSeparator());
+				ticketWriter.write("Station        : " + trainInfo[1].get(i).get(2));
+				ticketWriter.write(System.lineSeparator());
+				ticketWriter.write("Arrival Time   : " + trainInfo[1].get(i).get(3));
+				ticketWriter.write(System.lineSeparator());
+				ticketWriter.write("Departure Time : " + trainInfo[1].get(i).get(4));
+				ticketWriter.write(System.lineSeparator());
+				ticketWriter.write("Distance Trav. : " + trainInfo[1].get(i).get(5));
+				ticketWriter.write(System.lineSeparator());
+				ticketWriter.write("==========================");
+				ticketWriter.write(System.lineSeparator());
+			}
+			
+			ticketWriter.close();
+		}
+		
+		catch(IOException e)
+		{
+			return -1;
+		}
+			
+		return randomPNR;
 	}
 	
 	public void printTrains(String source, String destination)
@@ -414,5 +534,7 @@ public class journeyEase
 		rail.printTrainInfo("GHY Sp.", true);
 		
 		System.out.println(rail.trainRunsOnDate("2024-07-02", 421));*/
+		//rail.printTrainsOnDate("GHY", "NDLS", "2024-06-28");
+		//System.out.println(rail.bookTrain("user123", 12235, "2024-07-05", "2A", "GHY", "NDLS"));
 	}
 }
