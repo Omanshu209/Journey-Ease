@@ -344,7 +344,7 @@ class Railway
 			this.resetPNRScanner();
 		}
 		
-		String pnrData = randomPNR + "," + username + "," + trainNum + "," + date + "," + classTrain;
+		String pnrData = randomPNR + "," + username + "," + trainNum + "," + date + "," + classTrain + "," + from + "," + to;
 		LinkedList<LinkedList<String>>[] trainInfo = this.fetchTrainInfo(trainNum);
 		
 		try
@@ -361,31 +361,31 @@ class Railway
 			ticketWriter.write(System.lineSeparator());
 			ticketWriter.write("==========================");
 			ticketWriter.write(System.lineSeparator());
-			ticketWriter.write("|    PNR     |" + randomPNR);
+			ticketWriter.write("|    PNR     | " + randomPNR);
 			ticketWriter.write(System.lineSeparator());
 			ticketWriter.write("==========================");
 			ticketWriter.write(System.lineSeparator());
-			ticketWriter.write("| TRAIN NO.  |" + trainNum);
+			ticketWriter.write("| TRAIN NO.  | " + trainNum);
 			ticketWriter.write(System.lineSeparator());
 			ticketWriter.write("==========================");
 			ticketWriter.write(System.lineSeparator());
-			ticketWriter.write("| TRAIN NAME |" + trainInfo[0].get(0).get(1));
+			ticketWriter.write("| TRAIN NAME | " + trainInfo[0].get(0).get(1));
 			ticketWriter.write(System.lineSeparator());
 			ticketWriter.write("==========================");
 			ticketWriter.write(System.lineSeparator());
-			ticketWriter.write("|    DATE    |" + date);
+			ticketWriter.write("|    DATE    | " + date);
 			ticketWriter.write(System.lineSeparator());
 			ticketWriter.write("==========================");
 			ticketWriter.write(System.lineSeparator());
-			ticketWriter.write("|    CLASS   |" + classTrain);
+			ticketWriter.write("|    CLASS   | " + classTrain);
 			ticketWriter.write(System.lineSeparator());
 			ticketWriter.write("==========================");
 			ticketWriter.write(System.lineSeparator());
-			ticketWriter.write("|    FROM    |" + from);
+			ticketWriter.write("|    FROM    | " + from);
 			ticketWriter.write(System.lineSeparator());
 			ticketWriter.write("==========================");
 			ticketWriter.write(System.lineSeparator());
-			ticketWriter.write("|    TO      |" + to);
+			ticketWriter.write("|    TO      | " + to);
 			ticketWriter.write(System.lineSeparator());
 			ticketWriter.write("==========================");
 			
@@ -424,6 +424,60 @@ class Railway
 		}
 			
 		return randomPNR;
+	}
+	
+	private boolean isPNRValid(int PNR)
+	{
+		while(this.pnrReader.hasNextLine())
+		{
+			int pnr = Integer.parseInt(this.pnrReader.nextLine().split(",")[0]);
+			
+			if(pnr == PNR)
+			{
+				this.resetPNRScanner();
+				return true;
+			}
+		}
+		
+		this.resetPNRScanner();
+		return false;
+	}
+	
+	public String[] getPNRData(int PNR)
+	{
+		if(!this.isPNRValid(PNR))
+			return new String[7];
+		
+		String[] pnrData = new String[7];
+		while(this.pnrReader.hasNextLine())
+		{
+			pnrData = this.pnrReader.nextLine().split(",");
+			int pnr = Integer.parseInt(pnrData[0]);
+			
+			if(pnr == PNR)
+			{
+				this.resetPNRScanner();
+				return pnrData;
+			}
+		}
+		
+		return pnrData;
+	}
+	
+	public void printPNRData(int PNR)
+	{
+		if(!this.isPNRValid(PNR))
+			return;
+		
+		String[] pnrData = this.getPNRData(PNR);
+		
+		System.out.println("PNR       : " + pnrData[0]);
+		System.out.println("Username  : " + pnrData[1]);
+		System.out.println("Train No. : " + pnrData[2]);
+		System.out.println("Date      : " + pnrData[3]);
+		System.out.println("Class     : " + pnrData[4]);
+		System.out.println("From      : " + pnrData[5]);
+		System.out.println("To        : " + pnrData[6]);
 	}
 	
 	public void printTrains(String source, String destination)
@@ -530,11 +584,12 @@ public class journeyEase
 		rail.printTrainsOnDate("GHY", "NDLS", "2024-07-06");
 		System.out.println(rail.addTrain(data));
 		System.out.println(rail.isTrainNumValid(705));
-		//rail.printTrains("GHY", "NDLS");
+		rail.printTrains("GHY", "NDLS");
 		rail.printTrainInfo("GHY Sp.", true);
 		
-		System.out.println(rail.trainRunsOnDate("2024-07-02", 421));*/
-		//rail.printTrainsOnDate("GHY", "NDLS", "2024-06-28");
-		//System.out.println(rail.bookTrain("user123", 12235, "2024-07-05", "2A", "GHY", "NDLS"));
+		System.out.println(rail.trainRunsOnDate("2024-07-02", 421));
+		rail.printTrainsOnDate("GHY", "NDLS", "2024-06-28");
+		System.out.println(rail.bookTrain("user123", 12235, "2024-07-05", "2A", "GHY", "NDLS"));
+		rail.printPNRData(667024);*/
 	}
 }
