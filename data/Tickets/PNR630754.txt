@@ -1,0 +1,183 @@
+==========================
+|  USERNAME  | user123
+==========================
+|    PNR     |630754
+==========================
+| TRAIN NO.  |12235
+==========================
+| TRAIN NAME |GHY-NDLS RAJ
+==========================
+|    DATE    |2024-07-05
+==========================
+|    CLASS   |2A
+==========================
+|    FROM    |GHY
+==========================
+|    TO      |NDLS
+==========================
+
+
+
+
+
+
+
+==========================
+SCHEDULE
+==========================
+Station Code   : DBRG
+Station        : DIBRUGARH
+Arrival Time   : 18:15:00
+Departure Time : 18:15:00
+Distance Trav. : 0.0
+==========================
+Station Code   : MRHT
+Station        : MORANHAT
+Arrival Time   : 18:48:00
+Departure Time : 18:50:00
+Distance Trav. : 40.0
+==========================
+Station Code   : SLGR
+Station        : SIMALUGURI J
+Arrival Time   : 20:30:00
+Departure Time : 20:32:00
+Distance Trav. : 94.0
+==========================
+Station Code   : MXN
+Station        : MARIANI JN.
+Arrival Time   : 21:25:00
+Departure Time : 21:35:00
+Distance Trav. : 148.0
+==========================
+Station Code   : DMV
+Station        : DIMAPUR
+Arrival Time   : 22:58:00
+Departure Time : 23:05:00
+Distance Trav. : 256.0
+==========================
+Station Code   : DPU
+Station        : DIPHU
+Arrival Time   : 23:43:00
+Departure Time : 23:45:00
+Distance Trav. : 293.0
+==========================
+Station Code   : LMG
+Station        : LUMDING JN.
+Arrival Time   : 00:30:00
+Departure Time : 00:32:00
+Distance Trav. : 325.0
+==========================
+Station Code   : HJI
+Station        : HOJAI
+Arrival Time   : 01:23:00
+Departure Time : 01:25:00
+Distance Trav. : 370.0
+==========================
+Station Code   : GHY
+Station        : GUWAHATI
+Arrival Time   : 04:15:00
+Departure Time : 04:40:00
+Distance Trav. : 505.0
+==========================
+Station Code   : NBQ
+Station        : NEW BONGAIGA
+Arrival Time   : 07:10:00
+Departure Time : 07:12:00
+Distance Trav. : 662.0
+==========================
+Station Code   : KOJ
+Station        : KOKRAJHAR
+Arrival Time   : 07:40:00
+Departure Time : 07:42:00
+Distance Trav. : 694.0
+==========================
+Station Code   : NOQ
+Station        : NEW ALIPURDU
+Arrival Time   : 08:43:00
+Departure Time : 08:45:00
+Distance Trav. : 772.0
+==========================
+Station Code   : NCB
+Station        : NEW COOCH BE
+Arrival Time   : 09:13:00
+Departure Time : 09:15:00
+Distance Trav. : 790.0
+==========================
+Station Code   : NJP
+Station        : NEW JALPAIGU
+Arrival Time   : 11:35:00
+Departure Time : 11:45:00
+Distance Trav. : 917.0
+==========================
+Station Code   : KNE
+Station        : KISHANGANJ
+Arrival Time   : 12:50:00
+Departure Time : 12:52:00
+Distance Trav. : 1004.0
+==========================
+Station Code   : KIR
+Station        : KATIHAR JN.
+Arrival Time   : 15:15:00
+Departure Time : 15:25:00
+Distance Trav. : 1099.0
+==========================
+Station Code   : SPJ
+Station        : SAMASTIPUR J
+Arrival Time   : 18:40:00
+Departure Time : 18:45:00
+Distance Trav. : 1309.0
+==========================
+Station Code   : MFP
+Station        : MUZAFFARPUR
+Arrival Time   : 19:30:00
+Departure Time : 19:40:00
+Distance Trav. : 1360.0
+==========================
+Station Code   : HJP
+Station        : HAJIPUR JN.
+Arrival Time   : 20:30:00
+Departure Time : 20:35:00
+Distance Trav. : 1414.0
+==========================
+Station Code   : CPR
+Station        : CHHAPRA JN.
+Arrival Time   : 21:50:00
+Departure Time : 21:55:00
+Distance Trav. : 1473.0
+==========================
+Station Code   : BUI
+Station        : BALLIA
+Arrival Time   : 22:50:00
+Departure Time : 22:55:00
+Distance Trav. : 1538.0
+==========================
+Station Code   : BSB
+Station        : VARANASI JN.
+Arrival Time   : 01:30:00
+Departure Time : 01:40:00
+Distance Trav. : 1678.0
+==========================
+Station Code   : LKO
+Station        : LUCKNOW JN.
+Arrival Time   : 06:00:00
+Departure Time : 06:10:00
+Distance Trav. : 1954.0
+==========================
+Station Code   : BE
+Station        : BAREILLY JN.
+Arrival Time   : 09:30:00
+Departure Time : 09:33:00
+Distance Trav. : 2189.0
+==========================
+Station Code   : MB
+Station        : MORADABAD JN
+Arrival Time   : 11:00:00
+Departure Time : 11:07:00
+Distance Trav. : 2280.0
+==========================
+Station Code   : NDLS
+Station        : NEW DELHI
+Arrival Time   : 13:55:00
+Departure Time : 13:55:00
+Distance Trav. : 2446.0
+==========================
